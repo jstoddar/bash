@@ -1,4 +1,4 @@
-# python
+# Bash 
 
 Various bash scripts and libraries.
 
