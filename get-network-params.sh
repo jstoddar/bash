@@ -1,8 +1,8 @@
 #!/bin/bash
 # jstoddar at g mail .com
-# bash script/lib to get current networking parameters
-# works on rpm based distros versions 6, 7 and debian 14 LTS.
-# Requires additional shell lib cider-to-netmask.sh
+# Bash script/lib to get current networking parameters.
+# Works on rpm based distros versions 6, 7 and debian 14 LTS.
+# Requires additional bash lib: cider-to-netmask.sh
 
 sourceCidrToNetmaskLib(){
 # cider-to-netmask.sh uses getDottedQuadNetmaskFromCidr

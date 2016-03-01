@@ -1,0 +1,41 @@
+#!/bin/bash
+# jstoddar at g mail .com
+# Template for bash scripts that enables easy logging.
+# Runs script components in subshell for logging.
+# Creates logdir and dated logfiles for each run:
+#  /var/log/<scriptname>/<scriptname>.03.01.2016_13:27.log
+# Gzips all log files except the last run.
+# Cleans up logfiles as specified by variable DAYS_TO_KEEP_LOGS set below.
+LC_ALL=C
+DISPLAY=
+TERM=vt100
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:$PATH
+export LC_ALL DISPLAY PATH TERM
+START_TIME=`date +%s`
+LOGDATE=`date +%m.%d.%Y_%H:%M`
+SCRIPT_NAME=`basename $0| sed 's/^9//'`
+HOSTNAME=`hostname -s`
+LOG_PATH=/var/log/$SCRIPT_NAME
+DAYS_TO_KEEP_LOGS=30
+
+checkLogPath(){
+test -d $LOG_PATH || mkdir -p $LOG_PATH
+logfile=$LOG_PATH/$SCRIPT_NAME.${LOGDATE}.log
+gzip /var/log/$SCRIPT_NAME/*.log > /dev/null 2>&1
+find /var/log/$SCRIPT_NAME/ \
+  -type f \
+  -name "*.log.gz" \
+  -mtime +$DAYS_TO_KEEP_LOGS \
+  -exec rm -rf {} \;
+}
+
+#@ put new script functions here
+
+### MAIN ###
+checkLogPath
+(
+echo "Delete this line and put main logic and calls to functions here."
+#@ note, for output to std error and std out addition to logging,
+#@  replace the ">>" below with "| tee -a"
+) >> $logfile 2>&1
+
