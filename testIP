@@ -1,0 +1,36 @@
+#!/bin/bash
+# jstoddar at g mail .com
+# bash lib or function to check to see if an ip is a
+#  valid dotted quad IP.
+
+testValidDottedQuadIP(){
+# Spit on ".", test if n fields is 4, test that each field
+#  is an int, finally, test that each field is not > 255 
+IP_valid="0"
+eval $(echo $1| awk -F. -v IP=$1 '{
+  if (NF != 4){print "IP_valid=bad"}
+  for (i = 1; i < 5 ; i++){
+    if ($i !~ /^[0-9]+$/){print "IP_valid=1"; break}
+    if ($i > 255){print "IP_valid=1"; break}
+    }
+  }' 2>/dev/null)
+return $IP_valid
+}
+
+testTestFunction(){
+ips='4.2.2.2 aaa 5.a.z.6 a.b.c.d 192.168.1.1
+192.168.(.1 192.\.7.1 192.10./.1 192.^.1.1
+-.168.1.1 2.168.*.1 0.0.0.0 255.255.255.255
+255.256.255.255 256.255.255.253 192.168.0.1
+192.168.0 1234.123.123.123 1.45..43 67.2.8.1'
+
+for ip in $ips; do
+  if testValidDottedQuadIP $ip ; then
+    echo $ip okay
+  else
+    echo $ip  Bad
+  fi
+done
+}
+
+testTestFunction
