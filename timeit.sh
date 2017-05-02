@@ -1,15 +1,13 @@
 #!/bin/bash
-jstoddar at g mail .com
+# jstoddar at g mail .com
 # bash only...
 
 echoElapsedTime(){
-now_t=`date +%s`
-elapsed_t=$((`date +%s` - $start_t))
-elapsed_t=3795
+elapsed_t=$(($2 - $1))
 hr=`printf "%02d" $(($elapsed_t / 3600))`
 min=`printf "%02d" $((($elapsed_t % 3600) / 60))`
 sec=`printf "%02d" $(($elapsed_t % 60))`
-echo "elapsed time, hour,minute,second $hr $min $sec"
+echo "elapsed time: hr:min:sec: $hr:$min:$sec"
 }
 
 ### Test and an example of use.
